@@ -15,7 +15,7 @@ public class Sistema {
     static RepositorioSistema rs = new RepositorioSistema();
     static Scanner sc = new Scanner(System.in);
     static Perfil usuario = new Perfil();
-
+        
     // Pegando as datas
     static Calendar calendar = new GregorianCalendar();
     static int mes = calendar.get(Calendar.MONTH);
@@ -25,11 +25,12 @@ public class Sistema {
     public static void main(String[] args) {
 
         criandoAdmin();
-        criandoFuncionarios();
+        
+        /* criandoFuncionarios();
         criandoClientes();
 
         login();
-        funcoes();
+        funcoes();*/
     }
 
     // Métodos para Cliente        
@@ -51,8 +52,8 @@ public class Sistema {
         int acao = 0;
 
         do {
-            System.out.println("TELA DE CRUD CLIENTE\n\n");
-            System.out.println("Olá, " + usuario.getNome() + ". Selecione a ação que deseja");
+            System.out.println("TELA DE CLIENTE\n\n");
+            System.out.println("Olá, " + usuario.getNome() + ". Selecione a acao que deseja");
             // Apresentar as opções do que pode ser feito
             System.out.println("1 - Criar Cliente");
             System.out.println("2 - Dados do Cliente");
@@ -79,7 +80,7 @@ public class Sistema {
                     System.out.print("Id: ");
                     nCliente.setId(Integer.parseInt(sc.nextLine()));
 
-                    System.out.print("Endereço: ");
+                    System.out.print("Endereco: ");
                     nCliente.setEndereco(sc.nextLine());
 
                     System.out.print("Telefone: ");
@@ -118,7 +119,7 @@ public class Sistema {
                     System.out.print("CPF: ");
                     aCliente.setCpf(sc.nextLine());
 
-                    System.out.print("Endereço: ");
+                    System.out.print("Endereco: ");
                     aCliente.setEndereco(sc.nextLine());
 
                     System.out.print("Telefone: ");
@@ -148,7 +149,7 @@ public class Sistema {
         admin.setTelefone("(38) 99999-9999");
         admin.setLogin("admin");
         admin.setTipo_usuario(1);
-
+        
         ra.criarAdmin(admin);
         //ra.buscarDados(admin.getIdAdministrador());
     }
@@ -158,7 +159,7 @@ public class Sistema {
 
         do {
             System.out.println("TELA DE ADMIN");
-            System.out.println("Olá, " + usuario.getNome() + ". Selecione a ação que deseja");
+            System.out.println("Olá, " + usuario.getNome() + ". Selecione a acao que deseja");
             // Apresentar as opções do que pode ser feito
             System.out.println("1 - Alterações em Funcionario");
             System.out.println("2 - Alterações em Produtos");
@@ -183,7 +184,7 @@ public class Sistema {
                     boolean aux = false;
 
                     do {
-                        System.out.print("Entre com o mês (Digito): ");
+                        System.out.print("Entre com o mes (Digito): ");
                         int mesCal = (Integer.parseInt(sc.nextLine())) - 1;
 
                         if (-1 < mesCal && mesCal < 12) {
@@ -251,7 +252,7 @@ public class Sistema {
 
         do {
             System.out.println("TELA DE FUNCIONARIO\n\n");
-            System.out.println("Olá, " + usuario.getNome() + ". Selecione a ação que deseja");
+            System.out.println("Olá, " + usuario.getNome() + ". Selecione a acao que deseja");
             // Apresentar as opções do que pode ser feito
             System.out.println("1 - Criar Funcionario");
             System.out.println("2 - Dados do Funcionario");
@@ -266,7 +267,7 @@ public class Sistema {
 
             switch (acao) {
                 case 1 -> {
-                    System.out.print("CRIANDO FUNCIONÁRIO\n\n");
+                    System.out.print("CRIANDO FUNCIONARIO\n\n");
 
                     Funcionario nFuncionario = new Funcionario();
 
@@ -285,7 +286,7 @@ public class Sistema {
                     System.out.print("Senha: ");
                     nFuncionario.setSenha(sc.nextLine());
 
-                    System.out.print("Endereço: ");
+                    System.out.print("Endereco: ");
                     nFuncionario.setEndereco(sc.nextLine());
 
                     System.out.print("Telefone: ");
@@ -297,9 +298,9 @@ public class Sistema {
                     ra.criarFuncionario(nFuncionario);
                 }
                 case 2 -> {
-                    System.out.print("DADOS DO FUNCIONÁRIO\n\n");
+                    System.out.print("DADOS DO FUNCIONARIO\n\n");
 
-                    System.out.print("Entre com o id do funcionário: ");
+                    System.out.print("Entre com o id do funcionario: ");
                     int id = Integer.parseInt(sc.nextLine());
                     // Pegar o método para buscar o funcionário
 
@@ -307,11 +308,11 @@ public class Sistema {
                 }
                 case 3 -> {
                     // Alterar dados do funcionário
-                    System.out.print("ALTERAR DADOS DO FUNCIONÁRIO\n\n");
+                    System.out.print("ALTERAR DADOS DO FUNCIONARIO\n\n");
 
-                    System.out.print("Entre com o id do funcionário: ");
+                    System.out.print("Entre com o id do funcionario: ");
                     int idDados = Integer.parseInt(sc.nextLine());
-                    System.out.println("Dados do funcionário");
+                    System.out.println("Dados do funcionario");
                     rs.buscar("funcionario", idDados);
 
                     Funcionario aFuncionario = new Funcionario();
@@ -331,26 +332,26 @@ public class Sistema {
                     System.out.print("Senha: ");
                     aFuncionario.setSenha(sc.nextLine());
 
-                    System.out.print("Endereço: ");
+                    System.out.print("Endereco: ");
                     aFuncionario.setEndereco(sc.nextLine());
 
                     System.out.print("Telefone: ");
                     aFuncionario.setTelefone(sc.nextLine());
 
-                    System.out.print("Tipo de usuário: ");
+                    System.out.print("Tipo de usuario: ");
                     aFuncionario.setTipo_usuario(Integer.parseInt(sc.nextLine()));
 
                     ra.alterarDadosFuncionario(aFuncionario, idDados);
                 }
                 case 4 -> {
                     // Deletar usuário
-                    System.out.println("Entre com o id do funcionário para ser deletado: ");
+                    System.out.println("Entre com o id do funcionario para ser deletado: ");
                     int idDel = sc.nextInt();
 
                     ra.deletarFuncionario(idDel);
                 }
                 case 5 -> {
-                    System.out.println("Listar todos os funcionários: ");
+                    System.out.println("Listar todos os funcionarios: ");
                     ra.listarFuncionarios();
                 }
                 case 0 ->
@@ -404,7 +405,7 @@ public class Sistema {
             }
 
             if (logado == false) {
-                System.out.println("Login ou senha inválidos. Tente novamente...\n");
+                System.out.println("Login ou senha invalidos. Tente novamente...\n");
             }
 
         } while (logado != true);
@@ -417,7 +418,7 @@ public class Sistema {
 
         do {
 
-            System.out.println("Olá, " + usuario.getNome() + ". Selecione a ação que deseja");
+            System.out.println("Olá, " + usuario.getNome() + ". Selecione a acao que deseja");
             // Apresentar as opções do que pode ser feito
             System.out.println("1 - Consultar Pedidos");
             System.out.println("2 - Alterações em Cliente");
@@ -430,7 +431,7 @@ public class Sistema {
             }
 
             System.out.println("0 - Sair\n");
-            System.out.print("Entre com uma ação: ");
+            System.out.print("Entre com uma acao: ");
             acao = Integer.parseInt(sc.nextLine());
             System.out.println("______________________________");
 
@@ -464,7 +465,7 @@ public class Sistema {
         System.out.println("ID: " + usuario.getId());
         System.out.println("Nome: " + usuario.getNome());
         System.out.println("CPF: " + usuario.getCpf());
-        System.out.println("Nível de usuário: " + usuario.getTipo_usuario());
+        System.out.println("Nível de usuario: " + usuario.getTipo_usuario());
         System.out.println("Login: " + usuario.getLogin());
         System.out.println("Telefone: " + usuario.getTelefone());
         System.out.println("Endereço: " + usuario.getEndereco() + "\n");
@@ -476,7 +477,7 @@ public class Sistema {
 
         do {
             System.out.println("TELA DE PRODUTOS\n\n");
-            System.out.println("Olá, " + usuario.getNome() + ". Selecione a ação que deseja");
+            System.out.println("Olá, " + usuario.getNome() + ". Selecione a acao que deseja");
             // Apresentar as opções do que pode ser feito
             System.out.println("1 - Criar Produto");
             System.out.println("2 - Dados do Produto");
@@ -485,7 +486,7 @@ public class Sistema {
 
             System.out.println("0 - Voltar\n");
 
-            System.out.print("Entre com uma ação: ");
+            System.out.print("Entre com uma acao: ");
             acao = Integer.parseInt(sc.nextLine());
             System.out.println("______________________________");
 
@@ -504,7 +505,7 @@ public class Sistema {
                     System.out.print("Descrição produto: ");
                     nProduto.setDescProduto(sc.nextLine());
 
-                    System.out.print("Preço: ");
+                    System.out.print("Preco: ");
                     nProduto.setPreco(Double.parseDouble(sc.nextLine()));
 
                     ra.criarProduto(nProduto);
@@ -539,7 +540,7 @@ public class Sistema {
                     System.out.print("Descrição do Produto: ");
                     aProduto.setDescProduto(sc.nextLine());
 
-                    System.out.print("Preço: ");
+                    System.out.print("Preco: ");
                     aProduto.setPreco(sc.nextDouble());
 
                     ra.alterarProduto(aProduto, idDados);
@@ -568,7 +569,7 @@ public class Sistema {
 
         do {
             System.out.println("TELA DE PEDIDOS\n\n");
-            System.out.println("Olá, " + usuario.getNome() + ". Selecione a ação que deseja");
+            System.out.println("Olá, " + usuario.getNome() + ". Selecione a acao que deseja");
             // Apresentar as opções do que pode ser feito
             System.out.println("1 - Criar Pedido");
             System.out.println("2 - Dados do Pedido");
@@ -576,7 +577,7 @@ public class Sistema {
 
             System.out.println("0 - Voltar\n");
 
-            System.out.print("Entre com uma ação: ");
+            System.out.print("Entre com uma acao: ");
             acao = Integer.parseInt(sc.nextLine());
             System.out.println("______________________________");
 
@@ -646,7 +647,7 @@ public class Sistema {
                     System.out.print("Adicionais: ");
                     aPedido.setAdicionais(sc.nextLine());
 
-                    System.out.print("Descrição: ");
+                    System.out.print("Descricao: ");
                     aPedido.setDescPedido(sc.nextLine());
 
                     System.out.print("Tipo de pagamento: ");

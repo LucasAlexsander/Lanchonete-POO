@@ -1,5 +1,10 @@
 
 import Entidades.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.simple.*;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -19,38 +24,36 @@ public class teste {
     
     public static void main(String args[]) {
         
-        Produto p = new Produto();
-        p.setNomeProduto("Lucas");
-        p.setDescProduto("descrição1");
-        p.setPreco(0.4);
-        p.setIdProduto(1);
+        JSONObject programador1 = new JSONObject();
         
-        Produto p1 = new Produto();
-        p1.setNomeProduto("Alguma coisa");
-        p1.setDescProduto("descrição2");
-        p1.setPreco(0.4);
-        p1.setIdProduto(1);
+        programador1.put("nome", "Lucas Barbosa");
+        programador1.put("idade", 33);
+        programador1.put("signo", "Touro");
+        programador1.put("CPF:", "133.133.133-31");
         
-        Produto p2 = new Produto();
-        p2.setNomeProduto("Thai");
-        p2.setDescProduto("descrição3");
-        p2.setPreco(0.4);
-        p2.setIdProduto(1);
+        //System.out.println(programador1.toJSONString());
         
-        Colaboradores[0] = p;
-        Colaboradores[1] = p1;
-        Colaboradores[2] = p2;
+        JSONObject programador2 = new JSONObject();
         
+        programador2.put("nome", "Thai Barbosa");
+        programador2.put("idade", 20);
+        programador2.put("signo", "peixes");
+        programador2.put("CPF:", "123.133.133-31");
         
-        for (Produto colab : Colaboradores) {
-            if(colab.getNomeProduto().equals("Thai")){
-                System.out.println("Encontrado!");
-                System.out.println("Nome: " + colab.getNomeProduto());
-                System.out.println("Descrição: " + colab.getDescProduto());
-                System.out.println("Preço: " + colab.getPreco());
-                System.out.println("id: " + colab.getIdProduto());
-                break;
-            }
+        //System.out.println(programador2.toJSONString());
+        
+        JSONArray programadorLista = new JSONArray();
+        programadorLista.add(programador1);
+        programadorLista.add(programador2);
+        //System.out.println(programadorLista.toJSONString());
+        
+        try(FileWriter arquivoJson = new FileWriter("programadores")) {
+            
+            arquivoJson.write(programadorLista.toJSONString());
+            arquivoJson.flush();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(teste.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
