@@ -1,0 +1,15 @@
+Repositorio\RepositorioSistema.class
+Repositorio\InterFuncionario.class
+Sistema\Sistema.class
+Entidades\Produto.class
+Repositorio\RepositorioFuncionario.class
+Entidades\Perfil.class
+Entidades\Cliente.class
+Repositorio\RepositorioAdmin.class
+Repositorio\InterAdmin.class
+Entidades\Funcionario.class
+Entidades\Pedido.class
+Repositorio\InterSistema.class
+Repositorio\InterPerfil.class
+Repositorio\InterCliente.class
+Entidades\Admin.class
