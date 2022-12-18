@@ -1,0 +1,26 @@
+[
+  {
+    "idProduto": 1,
+    "nomeProduto": "Produto 1",
+    "descProduto": "Descrição 1",
+    "preco": 3.4
+  },
+  {
+    "idProduto": 2,
+    "nomeProduto": "Produto 2",
+    "descProduto": "Descrição 2",
+    "preco": 14.34
+  },
+  {
+    "idProduto": 3,
+    "nomeProduto": "Produto 3",
+    "descProduto": "Descrição 3",
+    "preco": 9.99
+  },
+  {
+    "idProduto": 4,
+    "nomeProduto": "Produto 4",
+    "descProduto": "Descrição 4",
+    "preco": 91.99
+  }
+]

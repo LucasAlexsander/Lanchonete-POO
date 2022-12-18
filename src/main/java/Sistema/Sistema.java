@@ -2,6 +2,8 @@ package Sistema;
 
 import Entidades.*;
 import Repositorio.*;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -26,11 +28,12 @@ public class Sistema {
 
         criandoAdmin();
         
-        /* criandoFuncionarios();
+        criandoFuncionarios();
+        
         criandoClientes();
 
         login();
-        funcoes();*/
+        funcoes();
     }
 
     // Métodos para Cliente        
@@ -370,6 +373,7 @@ public class Sistema {
     }
 
     public static void login() {
+                  
         List<Admin> arrayAdmin = new ArrayList<>();
         arrayAdmin = ra.arrayAdmin();
         Funcionario arrayFunc[] = RepositorioAdmin.getListFunc();

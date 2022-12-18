@@ -1,15 +1,21 @@
 package Repositorio;
 
 import Entidades.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.json.simple.*;
 
 public class RepositorioAdmin implements InterAdmin {
+
+    static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     List<Admin> listAdmin = new ArrayList<>();
     // List<Funcionario> listFunc = new ArrayList<>();
@@ -20,6 +26,12 @@ public class RepositorioAdmin implements InterAdmin {
     RepositorioSistema sistema = new RepositorioSistema();
 
     public static Funcionario[] getListFunc() {
+        
+        File file = new File("funcionario");
+        
+        // Convertendo
+        // listFunc = gson.fromJson(file, Funcionario.class);
+
         return listFunc;
     }
 
@@ -29,27 +41,26 @@ public class RepositorioAdmin implements InterAdmin {
 
     @Override
     public boolean criarAdmin(Admin admin) {
-        
-        JSONObject nAdmin = new JSONObject();
-        
-        nAdmin.put("nome", admin.getNome());
-        nAdmin.put("id", admin.getIdAdministrador());
-        nAdmin.put("cpf", admin.getCpf());
-        nAdmin.put("endereço", admin.getEndereco());
-        nAdmin.put("senha", admin.getSenha());
-        nAdmin.put("telefone", admin.getTelefone());
-        nAdmin.put("login", admin.getLogin());
-        nAdmin.put("tipo_usuario", admin.getTipo_usuario());
-       
-        try(FileWriter arquivoJson = new FileWriter("admin")) {
-            
-            arquivoJson.write(nAdmin.toJSONString());
-            arquivoJson.flush();
-            
-        } catch (IOException ex) {
+
+        try {
+            System.out.println("Chegamos aqui");
+            listAdmin.add(admin);
+
+            // Convertendo para Json
+            String jsonAdmin = gson.toJson(listAdmin);
+
+            // Passand o para o arquivos Json
+            FileWriter fileWrite = new FileWriter("admin");
+            fileWrite.write(jsonAdmin);
+            fileWrite.flush();
+            fileWrite.close();
+
+            System.out.println("Admin criado!");
+        } catch (Exception e) {
+            Object ex = null;
             Logger.getLogger(RepositorioAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -88,6 +99,16 @@ public class RepositorioAdmin implements InterAdmin {
     public boolean criarProduto(Produto produto) {
         try {
             listProduto.add(produto);
+
+            // Convertendo para Json
+            String jsonProduto = gson.toJson(listProduto);
+
+            // Passand o para o arquivos Json
+            FileWriter fileWrite = new FileWriter("produto");
+            fileWrite.write(jsonProduto);
+            fileWrite.flush();
+            fileWrite.close();
+
             System.out.println("\nProduto criado com sucesso!\n");
         } catch (Exception e) {
             return false;
@@ -120,33 +141,13 @@ public class RepositorioAdmin implements InterAdmin {
 
     @Override
     public boolean criarFuncionario(Funcionario func) {
-        
-        JSONObject nFunc = new JSONObject();
-        
-        nFunc.put("nome", func.getNome());
-        nFunc.put("id", func.getIdFuncionario());
-        nFunc.put("cpf", func.getCpf());
-        nFunc.put("endereço", func.getEndereco());
-        nFunc.put("senha", func.getSenha());
-        nFunc.put("telefone", func.getTelefone());
-        nFunc.put("login", func.getLogin());
-        nFunc.put("tipo_usuario", func.getTipo_usuario());
-       
-        try(FileWriter arquivoJson = new FileWriter("funcionários")) {
-            
-            arquivoJson.write(nFunc.toJSONString());
-            arquivoJson.flush();
-            
-        } catch (IOException ex) {
-            Logger.getLogger(RepositorioAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return true;
-        
-        /*try {
-            
-            for(int i = 0; i < 15; i++) {
-                if(RepositorioAdmin.listFunc[i] == null) {
+
+        try {
+
+            for (int i = 0; i < 15; i++) {
+                if (RepositorioAdmin.listFunc[i] == null) {
                     RepositorioAdmin.listFunc[i] = func;
+
                     break;
                 }
             }
@@ -154,7 +155,21 @@ public class RepositorioAdmin implements InterAdmin {
             System.out.println("\nFuncionário criado com sucesso!\n");
         } catch (Exception e) {
             return false;
-        }*/
+        }
+
+        try {
+            // Convertendo para Json
+            String jsonFunc = gson.toJson(listFunc);
+
+            FileWriter fileWrite = new FileWriter("funcionario");
+            fileWrite.write(jsonFunc);
+            fileWrite.flush();
+            fileWrite.close();
+            System.out.println(jsonFunc);
+
+        } catch (Exception e) {
+        }
+
         return true;
 
     }

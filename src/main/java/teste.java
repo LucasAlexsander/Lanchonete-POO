@@ -1,16 +1,19 @@
 
 import Entidades.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.lang.reflect.Type;
+import com.google.gson.reflect.TypeToken;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.json.simple.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Other/File.java to edit this template
  */
-
 /**
  *
  * @author Lucas Alexsander
@@ -18,42 +21,72 @@ import org.json.simple.*;
 public class teste {
 
     private static Produto Colaboradores[] = new Produto[15];
-    
-    
-    
-    
-    public static void main(String args[]) {
+
+    public static void main(String args[]) throws IOException {
         
-        JSONObject programador1 = new JSONObject();
+        Gson gson = new Gson();
         
-        programador1.put("nome", "Lucas Barbosa");
-        programador1.put("idade", 33);
-        programador1.put("signo", "Touro");
-        programador1.put("CPF:", "133.133.133-31");
+        gson.newJsonReader("produto");
         
-        //System.out.println(programador1.toJSONString());
+        String jsonText = AbstracrReader.readJson("produto");
+
+        /*Produto p = new Produto();
+
+        p.setDescProduto("Descrição 1");
+        p.setIdProduto(1);
+        p.setNomeProduto("Produto 1");
+        p.setPreco(3.4);
+
+        Produto p2 = new Produto();
+
+        p2.setDescProduto("Descrição 2");
+        p2.setIdProduto(2);
+        p2.setNomeProduto("Produto 2");
+        p2.setPreco(14.34);
+
+        Produto p3 = new Produto();
+
+        p3.setDescProduto("Descrição 3");
+        p3.setIdProduto(3);
+        p3.setNomeProduto("Produto 3");
+        p3.setPreco(9.99);
         
-        JSONObject programador2 = new JSONObject();
+        Produto p4 = new Produto();
+
+        p4.setDescProduto("Descrição 4");
+        p4.setIdProduto(4);
+        p4.setNomeProduto("Produto 4");
+        p4.setPreco(91.99);
+
+        List<Produto> listProduto = new ArrayList<>();
+
+        listProduto.add(p);
+        listProduto.add(p2);
+        listProduto.add(p3);
+        listProduto.add(p4);
+        // Convertendo para Json
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         
-        programador2.put("nome", "Thai Barbosa");
-        programador2.put("idade", 20);
-        programador2.put("signo", "peixes");
-        programador2.put("CPF:", "123.133.133-31");
+        String jsonProduto = gson.toJson(listProduto);
+
+        System.out.println(jsonProduto);
         
-        //System.out.println(programador2.toJSONString());
+        System.out.println("_______________________\nConvertendo para obj");
         
-        JSONArray programadorLista = new JSONArray();
-        programadorLista.add(programador1);
-        programadorLista.add(programador2);
-        //System.out.println(programadorLista.toJSONString());
+        Type listType = new TypeToken<ArrayList<Produto>>(){}.getType();        
+        List<Produto> listProduto2 = new ArrayList<>();
+        // Convertendo
+        listProduto2 = gson.fromJson(jsonProduto, listType);
         
-        try(FileWriter arquivoJson = new FileWriter("programadores")) {
-            
-            arquivoJson.write(programadorLista.toJSONString());
-            arquivoJson.flush();
-            
-        } catch (IOException ex) {
-            Logger.getLogger(teste.class.getName()).log(Level.SEVERE, null, ex);
+        for (Produto produto : listProduto2) {
+            System.out.println(produto.getNomeProduto());
         }
+        
+        // Criando o arquivo json e salvando
+        FileWriter fileWrite = new FileWriter("teste");
+        fileWrite.write(jsonProduto);
+        fileWrite.flush();
+        fileWrite.close();
+        */
     }
 }

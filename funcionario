@@ -1,0 +1,47 @@
+[
+  {
+    "idFuncionario": 1,
+    "id": 0,
+    "nome": "Thais Nascimento",
+    "telefone": "(38) 99999-9999",
+    "login": "func1",
+    "cpf": "999.999.999-99",
+    "senha": "func1",
+    "tipo_usuario": 0,
+    "endereco": "Aquele lá, 2"
+  },
+  {
+    "idFuncionario": 2,
+    "id": 0,
+    "nome": "Jose Ribeiro",
+    "telefone": "(38) 99999-9999",
+    "login": "func2",
+    "cpf": "999.999.999-99",
+    "senha": "func2",
+    "tipo_usuario": 0,
+    "endereco": "Na casa de cima, 5"
+  },
+  {
+    "idFuncionario": 3,
+    "id": 0,
+    "nome": "Aberto Carlos",
+    "telefone": "(38) 99999-9999",
+    "login": "func2",
+    "cpf": "999.999.999-99",
+    "senha": "func2",
+    "tipo_usuario": 0,
+    "endereco": "Na rua ao lado, 13"
+  },
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null
+]
