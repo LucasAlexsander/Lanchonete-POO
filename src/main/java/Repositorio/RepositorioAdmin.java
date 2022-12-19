@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -17,20 +19,40 @@ public class RepositorioAdmin implements InterAdmin {
 
     static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    List<Admin> listAdmin = new ArrayList<>();
-    // List<Funcionario> listFunc = new ArrayList<>();
+    private static List<Admin> listAdmin = new ArrayList<>();
     private static Funcionario listFunc[] = new Funcionario[15];
+    private static List<Cliente> listClientesAdmin = new ArrayList<>();
+    private static List<Produto> listProduto = new ArrayList<>();
+
     List<Perfil> listTodos = new ArrayList<>();
-    List<Cliente> listClientesAdmin = new ArrayList<>();
-    List<Produto> listProduto = new ArrayList<>();
+
+    public List<Admin> getListAdmin() {
+        return listAdmin;
+    }
+
+    public void setListAdmin(List<Admin> listAdmin) {
+        this.listAdmin = listAdmin;
+    }
+
+    public List<Cliente> getListClientes() {
+        return listClientesAdmin;
+    }
+
+    public void setListClientes(List<Cliente> listClientesAdmin) {
+        this.listClientesAdmin = listClientesAdmin;
+    }
+
+    public List<Produto> getListProduto() {
+        return listProduto;
+    }
+
+    public void setListProduto(List<Produto> listProduto) {
+        this.listProduto = listProduto;
+    }
+
     RepositorioSistema sistema = new RepositorioSistema();
 
     public static Funcionario[] getListFunc() {
-        
-        File file = new File("funcionario");
-        
-        // Convertendo
-        // listFunc = gson.fromJson(file, Funcionario.class);
 
         return listFunc;
     }
@@ -46,14 +68,7 @@ public class RepositorioAdmin implements InterAdmin {
             System.out.println("Chegamos aqui");
             listAdmin.add(admin);
 
-            // Convertendo para Json
-            String jsonAdmin = gson.toJson(listAdmin);
-
-            // Passand o para o arquivos Json
-            FileWriter fileWrite = new FileWriter("admin");
-            fileWrite.write(jsonAdmin);
-            fileWrite.flush();
-            fileWrite.close();
+            HandlerJson.saveToJSON();
 
             System.out.println("Admin criado!");
         } catch (Exception e) {
@@ -75,6 +90,7 @@ public class RepositorioAdmin implements InterAdmin {
                 System.out.println("Senha atualizada com sucesso.\n");
             }
         }
+        HandlerJson.saveToJSON();
     }
 
     @Override
@@ -100,14 +116,7 @@ public class RepositorioAdmin implements InterAdmin {
         try {
             listProduto.add(produto);
 
-            // Convertendo para Json
-            String jsonProduto = gson.toJson(listProduto);
-
-            // Passand o para o arquivos Json
-            FileWriter fileWrite = new FileWriter("produto");
-            fileWrite.write(jsonProduto);
-            fileWrite.flush();
-            fileWrite.close();
+            HandlerJson.saveToJSON();
 
             System.out.println("\nProduto criado com sucesso!\n");
         } catch (Exception e) {
@@ -118,13 +127,19 @@ public class RepositorioAdmin implements InterAdmin {
 
     @Override
     public void alterarProduto(Produto protudo, int id) {
-
+        
         for (Produto protudo1 : listProduto) {
             if (protudo1.getIdProduto() == id) {
                 listProduto.remove(protudo1);
                 listProduto.add(protudo);
+                
+                System.out.println("\nNome: " + protudo1.getNomeProduto());
+
+                break;
             }
         }
+        
+        HandlerJson.saveToJSON();
         System.out.println("\nProduto atualizado com sucesso.\n");
     }
 
@@ -133,6 +148,9 @@ public class RepositorioAdmin implements InterAdmin {
         for (Produto produto : listProduto) {
             if (produto.getIdProduto() == id) {
                 listProduto.remove(produto);
+
+                HandlerJson.saveToJSON();
+
                 System.out.println("Produto deletado com sucesso!");
                 break;
             }
@@ -148,6 +166,8 @@ public class RepositorioAdmin implements InterAdmin {
                 if (RepositorioAdmin.listFunc[i] == null) {
                     RepositorioAdmin.listFunc[i] = func;
 
+                    HandlerJson.saveToJSON();
+
                     break;
                 }
             }
@@ -157,19 +177,6 @@ public class RepositorioAdmin implements InterAdmin {
             return false;
         }
 
-        try {
-            // Convertendo para Json
-            String jsonFunc = gson.toJson(listFunc);
-
-            FileWriter fileWrite = new FileWriter("funcionario");
-            fileWrite.write(jsonFunc);
-            fileWrite.flush();
-            fileWrite.close();
-            System.out.println(jsonFunc);
-
-        } catch (Exception e) {
-        }
-
         return true;
 
     }
@@ -177,20 +184,28 @@ public class RepositorioAdmin implements InterAdmin {
     @Override
     public void alterarDadosFuncionario(Funcionario func, int id) {
 
-        for (Funcionario func1 : listFunc) {
-            if (func1.getIdFuncionario() == id) {
-                //listFunc.remove(func1);
-                func1 = func;
+        for (int i = 0; i < listFunc.length; i++) {
+            if (listFunc[i].getIdFuncionario() == id) {
+                listFunc[i] = func;
+                HandlerJson.saveToJSON();
+
+                System.out.println("Funcionário deletado com sucesso!");
+                break;
             }
         }
+
+        HandlerJson.saveToJSON();
         System.out.println("\nFuncionário atualizado com sucesso.\n");
     }
 
     @Override
     public void deletarFuncionario(int id) {
-        for (Funcionario func : listFunc) {
-            if (func.getIdFuncionario() == id) {
-                func = null;
+
+        for (int i = 0; i < listFunc.length; i++) {
+            if (listFunc[i].getIdFuncionario() == id) {
+                listFunc[i] = null;
+                HandlerJson.saveToJSON();
+
                 System.out.println("Funcionário deletado com sucesso!");
                 break;
             }

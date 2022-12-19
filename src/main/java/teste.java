@@ -1,10 +1,14 @@
 
 import Entidades.*;
+import Repositorio.RepositorioAdmin;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.lang.reflect.Type;
 import com.google.gson.reflect.TypeToken;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,70 +27,25 @@ public class teste {
     private static Produto Colaboradores[] = new Produto[15];
 
     public static void main(String args[]) throws IOException {
-        
+
         Gson gson = new Gson();
-        
-        gson.newJsonReader("produto");
-        
-        String jsonText = AbstracrReader.readJson("produto");
 
-        /*Produto p = new Produto();
+        BufferedReader br = null;
 
-        p.setDescProduto("Descrição 1");
-        p.setIdProduto(1);
-        p.setNomeProduto("Produto 1");
-        p.setPreco(3.4);
+        try {
+            br = new BufferedReader(new FileReader("admin.json"));
 
-        Produto p2 = new Produto();
+            List<Admin> admin = gson.fromJson(br, List.class);
 
-        p2.setDescProduto("Descrição 2");
-        p2.setIdProduto(2);
-        p2.setNomeProduto("Produto 2");
-        p2.setPreco(14.34);
-
-        Produto p3 = new Produto();
-
-        p3.setDescProduto("Descrição 3");
-        p3.setIdProduto(3);
-        p3.setNomeProduto("Produto 3");
-        p3.setPreco(9.99);
-        
-        Produto p4 = new Produto();
-
-        p4.setDescProduto("Descrição 4");
-        p4.setIdProduto(4);
-        p4.setNomeProduto("Produto 4");
-        p4.setPreco(91.99);
-
-        List<Produto> listProduto = new ArrayList<>();
-
-        listProduto.add(p);
-        listProduto.add(p2);
-        listProduto.add(p3);
-        listProduto.add(p4);
-        // Convertendo para Json
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        
-        String jsonProduto = gson.toJson(listProduto);
-
-        System.out.println(jsonProduto);
-        
-        System.out.println("_______________________\nConvertendo para obj");
-        
-        Type listType = new TypeToken<ArrayList<Produto>>(){}.getType();        
-        List<Produto> listProduto2 = new ArrayList<>();
-        // Convertendo
-        listProduto2 = gson.fromJson(jsonProduto, listType);
-        
-        for (Produto produto : listProduto2) {
-            System.out.println(produto.getNomeProduto());
+            System.out.println(admin);
+            
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                br.close();
+            }
         }
-        
-        // Criando o arquivo json e salvando
-        FileWriter fileWrite = new FileWriter("teste");
-        fileWrite.write(jsonProduto);
-        fileWrite.flush();
-        fileWrite.close();
-        */
+
     }
 }

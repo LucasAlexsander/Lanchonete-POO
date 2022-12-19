@@ -3,12 +3,16 @@ package Sistema;
 import Entidades.*;
 import Repositorio.*;
 import com.google.gson.reflect.TypeToken;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.GregorianCalendar;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.Port;
 
 public class Sistema {
     // Instanciando algumas classes
@@ -17,7 +21,7 @@ public class Sistema {
     static RepositorioSistema rs = new RepositorioSistema();
     static Scanner sc = new Scanner(System.in);
     static Perfil usuario = new Perfil();
-        
+
     // Pegando as datas
     static Calendar calendar = new GregorianCalendar();
     static int mes = calendar.get(Calendar.MONTH);
@@ -26,16 +30,68 @@ public class Sistema {
 
     public static void main(String[] args) {
 
+        criarProduto();
+        
         criandoAdmin();
+        
+        /*criandoAdmin();
         
         criandoFuncionarios();
         
-        criandoClientes();
-
-        login();
-        funcoes();
+        criandoClientes();*/
+        //login();
+        //funcoes();
     }
 
+    public static void criarProduto() {
+        Produto p = new Produto();
+        p.setDescProduto("Descrição");
+        p.setIdProduto(1);
+        p.setNomeProduto("Produto");
+        p.setPreco(3.3);
+        
+        ra.criarProduto(p);
+        
+        //ra.deletarProduto(1);
+        
+        Produto p1 = new Produto();
+        p1.setDescProduto("Descrição");
+        p1.setIdProduto(1);
+        p1.setNomeProduto("Produto Alterado");
+        p1.setPreco(3.3);
+        
+        ra.alterarProduto(p1, 1);
+        
+    }
+    
+    public static void criandoPedido() {
+        Pedido p = new Pedido();
+        p.setNome("Pedido");
+        p.setAdicionais("Adicionais");
+        p.setCliente("Cliente");
+        p.setDescPedido("Descrição");
+        p.setIdPedido(3);
+        p.setPagamento("pix");
+        p.setPrevisaoEntrega("30min");
+        p.setStatus("Pronto");
+        
+        rs.criarPedido(p, 12);
+        
+        // rs.deletar("pedido", 3);
+        
+        Pedido p1 = new Pedido();
+        p1.setNome("Pedido Alterado");
+        p1.setAdicionais("Adicionais");
+        p1.setCliente("Cliente");
+        p1.setDescPedido("Descrição");
+        p1.setIdPedido(3);
+        p1.setPagamento("pix");
+        p1.setPrevisaoEntrega("30min");
+        p1.setStatus("Pronto");
+        
+        rs.alterarPedido(p1, 3);
+    }
+    
     // Métodos para Cliente        
     public static void criandoClientes() {
         Cliente cliente = new Cliente();
@@ -47,8 +103,24 @@ public class Sistema {
         cliente.setTelefone("(38) 99999-9999");
         cliente.setLogin("cliente");
         cliente.setUltPedidos("ALsdasjdalsjkda");
-        cliente.setTipo_usuario(-1);
+        cliente.setTipo_usuario(1);
+        
         rs.criarCliente(cliente);
+        
+        //rs.deletar("cliente", 1);
+        
+        Cliente cliente1 = new Cliente();
+        cliente1.setIdCliente(1);
+        cliente1.setCpf("999.999.999-99");
+        cliente1.setEndereco("Macau de Cima, 223");
+        cliente1.setNome("Rafael Lucas Alterado");
+        cliente1.setSenha("cliente");
+        cliente1.setTelefone("(38) 99999-9999");
+        cliente1.setLogin("cliente");
+        cliente1.setUltPedidos("ALsdasjdalsjkda");
+        cliente1.setTipo_usuario(1);
+        
+        rs.alterarCliente(cliente1, 1);
     }
 
     public static void crudCliente() {
@@ -152,8 +224,10 @@ public class Sistema {
         admin.setTelefone("(38) 99999-9999");
         admin.setLogin("admin");
         admin.setTipo_usuario(1);
-        
+
         ra.criarAdmin(admin);
+        
+        ra.alterarSenha("admin123", 1);
         //ra.buscarDados(admin.getIdAdministrador());
     }
 
@@ -271,11 +345,22 @@ public class Sistema {
             switch (acao) {
                 case 1 -> {
                     System.out.print("CRIANDO FUNCIONARIO\n\n");
-
+                    
+                    Funcionario arrayFunc[] = RepositorioAdmin.getListFunc();
+                    
+                    int id = 1;
+                    
+                    for (Funcionario func : arrayFunc) {
+                        if(func != null) {
+                            id += 1;
+                        }
+                    }
+                    
                     Funcionario nFuncionario = new Funcionario();
 
-                    System.out.print("Id: ");
-                    nFuncionario.setIdFuncionario(Integer.parseInt(sc.nextLine()));
+                    //System.out.print("Id: ");
+                    nFuncionario.setId(id);
+                    nFuncionario.setIdFuncionario(id);
 
                     System.out.print("Nome: ");
                     nFuncionario.setNome(sc.nextLine());
@@ -349,7 +434,7 @@ public class Sistema {
                 case 4 -> {
                     // Deletar usuário
                     System.out.println("Entre com o id do funcionario para ser deletado: ");
-                    int idDel = sc.nextInt();
+                    int idDel = Integer.parseInt(sc.nextLine());
 
                     ra.deletarFuncionario(idDel);
                 }
@@ -373,11 +458,15 @@ public class Sistema {
     }
 
     public static void login() {
-                  
-        List<Admin> arrayAdmin = new ArrayList<>();
-        arrayAdmin = ra.arrayAdmin();
+
+        try {
+            HandlerJson.openAndReadJson();
+        } catch (IOException ex) {
+            Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        List<Admin> arrayAdmin = ra.arrayAdmin();
         Funcionario arrayFunc[] = RepositorioAdmin.getListFunc();
-        
 
         do {
             System.out.print("Entre com o login: ");
@@ -399,12 +488,15 @@ public class Sistema {
                 System.out.println("Chegamos aqui");
                 // Verificando se o login é no funcionario
                 for (Funcionario func : arrayFunc) {
-                    if (func.getLogin().equals(login) && func.getSenha().equals(senha)) {
-                        usuario = func;
+                    if (func != null) {
+                        if (func.getLogin().equals(login) && func.getSenha().equals(senha)) {
+                            usuario = func;
 
-                        logado = true;
-                        break;
+                            logado = true;
+                            break;
+                        }
                     }
+
                 }
             }
 
@@ -422,7 +514,7 @@ public class Sistema {
 
         do {
 
-            System.out.println("Olá, " + usuario.getNome() + ". Selecione a acao que deseja");
+            System.out.println("Olá, " + usuario.getNome() + ". Selecione a ação que deseja");
             // Apresentar as opções do que pode ser feito
             System.out.println("1 - Consultar Pedidos");
             System.out.println("2 - Alterações em Cliente");
@@ -496,7 +588,7 @@ public class Sistema {
 
             switch (acao) {
                 case 1 -> {
-                    System.out.print("CRIANDO PEDIDO\n\n");
+                    System.out.print("CRIANDO PRODUTOS\n\n");
 
                     Produto nProduto = new Produto();
 
@@ -531,7 +623,7 @@ public class Sistema {
                     System.out.print("Entre com o id do produto: ");
                     int idDados = Integer.parseInt(sc.nextLine());
                     System.out.println("Dados do produto");
-                    ra.buscar("pedido", idDados);
+                    ra.buscar("produto", idDados);
 
                     Produto aProduto = new Produto();
 
@@ -546,7 +638,7 @@ public class Sistema {
 
                     System.out.print("Preco: ");
                     aProduto.setPreco(sc.nextDouble());
-
+                    
                     ra.alterarProduto(aProduto, idDados);
                 }
                 case 4 -> {

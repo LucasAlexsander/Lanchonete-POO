@@ -1,5 +1,7 @@
 package Entidades;
 
+import java.util.ArrayList;
+
 public class Admin extends Perfil{
     private int idAdministrador;
 
